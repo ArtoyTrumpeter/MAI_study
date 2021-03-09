@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/artoy/Desktop/Labs/OOP/Lab4/figure.hpp
+iostream
+-
+tuple
+-
+cmath
+-
+
+/home/artoy/Desktop/Labs/OOP/Lab4/main.cpp
+figure.hpp
+/home/artoy/Desktop/Labs/OOP/Lab4/figure.hpp
+

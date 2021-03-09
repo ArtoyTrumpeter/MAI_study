@@ -1,0 +1,3 @@
+/home/artoy/Desktop/Labs/OOP/Lab6/CMakeFiles/rebuild_cache.dir
+/home/artoy/Desktop/Labs/OOP/Lab6/CMakeFiles/main.dir
+/home/artoy/Desktop/Labs/OOP/Lab6/CMakeFiles/edit_cache.dir

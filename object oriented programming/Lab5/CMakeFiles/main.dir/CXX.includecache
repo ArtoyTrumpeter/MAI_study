@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/artoy/Desktop/Labs/OOP/Lab5/Triangle.hpp
+iostream
+-
+iomanip
+-
+cmath
+-
+
+/home/artoy/Desktop/Labs/OOP/Lab5/Vector.hpp
+algorithm
+-
+cassert
+-
+memory
+-
+iostream
+-
+
+/home/artoy/Desktop/Labs/OOP/Lab5/main.cpp
+iostream
+-
+Vector.hpp
+/home/artoy/Desktop/Labs/OOP/Lab5/Vector.hpp
+map
+-
+algorithm
+-
+Triangle.hpp
+/home/artoy/Desktop/Labs/OOP/Lab5/Triangle.hpp
+

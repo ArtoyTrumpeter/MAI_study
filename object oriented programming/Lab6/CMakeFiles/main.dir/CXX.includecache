@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/artoy/Desktop/Labs/OOP/Lab6/allocator.hpp
+square.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/square.hpp
+queue.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/queue.hpp
+
+/home/artoy/Desktop/Labs/OOP/Lab6/main.cpp
+square.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/square.hpp
+queue.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/queue.hpp
+allocator.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/allocator.hpp
+vector.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/vector.hpp
+
+/home/artoy/Desktop/Labs/OOP/Lab6/queue.hpp
+square.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/square.hpp
+
+/home/artoy/Desktop/Labs/OOP/Lab6/square.hpp
+iostream
+-
+cmath
+-
+algorithm
+-
+memory
+-
+cassert
+-
+
+/home/artoy/Desktop/Labs/OOP/Lab6/vector.hpp
+square.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/square.hpp
+allocator.hpp
+/home/artoy/Desktop/Labs/OOP/Lab6/allocator.hpp
+

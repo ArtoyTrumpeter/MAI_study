@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/child_node.dir/child_node.cpp.o  -o child_node -lzmq libfunctions.a -lzmq 

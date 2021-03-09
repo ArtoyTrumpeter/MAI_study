@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/lab6.dir/main_node.cpp.o  -o lab6 -lzmq libfunctions.a -lzmq 

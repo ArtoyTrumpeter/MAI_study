@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/artoy/Desktop/Labs/OOP/Lab8/event.hpp
+figure.hpp
+/home/artoy/Desktop/Labs/OOP/Lab8/figure.hpp
+
+/home/artoy/Desktop/Labs/OOP/Lab8/eventchannel.hpp
+figure.hpp
+/home/artoy/Desktop/Labs/OOP/Lab8/figure.hpp
+
+/home/artoy/Desktop/Labs/OOP/Lab8/figure.hpp
+iostream
+-
+cmath
+-
+vector
+-
+memory
+-
+thread
+-
+mutex
+-
+queue
+-
+fstream
+-
+unordered_map
+-
+algorithm
+-
+
+/home/artoy/Desktop/Labs/OOP/Lab8/main.cpp
+figure.hpp
+/home/artoy/Desktop/Labs/OOP/Lab8/figure.hpp
+event.hpp
+/home/artoy/Desktop/Labs/OOP/Lab8/event.hpp
+eventchannel.hpp
+/home/artoy/Desktop/Labs/OOP/Lab8/eventchannel.hpp
+

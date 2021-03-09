@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/oop_execrise_04.dir/main.cpp.o  -o oop_execrise_04 

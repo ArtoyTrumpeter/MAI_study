@@ -1,0 +1,5 @@
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/CMakeFiles/rebuild_cache.dir
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/CMakeFiles/edit_cache.dir
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/CMakeFiles/functions.dir
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/CMakeFiles/lab6.dir
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/CMakeFiles/child_node.dir

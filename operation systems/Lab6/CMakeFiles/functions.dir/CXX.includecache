@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/server_functions.cpp
+server_functions.h
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/server_functions.h
+
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/server_functions.h
+string
+-
+unistd.h
+-
+zmq.hpp
+/home/artoy/Desktop/Labs/3 sem/OS/Lab6/zmq.hpp
+

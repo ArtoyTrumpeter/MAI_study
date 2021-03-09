@@ -1,0 +1,3 @@
+/home/artoy/Desktop/Labs/OOP/CMakeFiles/rebuild_cache.dir
+/home/artoy/Desktop/Labs/OOP/CMakeFiles/oop_exercise_01.dir
+/home/artoy/Desktop/Labs/OOP/CMakeFiles/edit_cache.dir
