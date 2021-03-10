@@ -119,7 +119,7 @@ void TNode::FillArray(
 TSuffTree::TSuffTree() : 
     globalUpper(0), 
     remainder(0),
-    activePoint({nullptr, '\0', 0})
+    activePoint({nullptr, '\0', 0}) 
 {
     
 }
@@ -277,7 +277,6 @@ void TSuffArray::PrintArray() {
     std::cout << "}" << std::endl;
 }
 
-// This is dumb. Sorry!
 void TSuffArray::PrintLcp() {
     std::cout << "{ ";
     for (const int& e : lcp) {
