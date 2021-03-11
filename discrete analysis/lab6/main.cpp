@@ -8,11 +8,6 @@
 const int base = 1000000;
 const int bpow = 6;
 
-/* [-,^,*,/] and main */
-// неккоректные условия в мэйне
-// перевыполнение(т 4)
-// плохой power
-
 class TBigInt {
 private:
     std::vector<long long> number;
@@ -55,8 +50,7 @@ public:
             return stream;
         }
         stream << other.number[other.number.size() - 1];
-        for (int i = other.number.size() - 2;i >= 0;--i)
-        {
+        for (int i = other.number.size() - 2; i >= 0; --i) {
             stream << std::setfill('0') << std::setw(bpow) << other.number[i];
         }
         return stream;
