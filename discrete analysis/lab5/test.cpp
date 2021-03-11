@@ -12,12 +12,14 @@ int main() {
         out << char ('a' + rand() % ('z' - 'a'));
     }
     out << "\n";
-    for (int i = 0; i < amount; i++) {
-        for (int i = 0; i < (10); i++) {
+    for (int i = 1; i <= amount; i++) {
+        for (int j = 0; j < (10); j++) {
             out << char ('a' + rand() % ('z' - 'a'));
         }
-        if (i != --amount) {
+        if (i != amount) {
             out << "\n";
+        } else {
+            continue;
         }
     }
     out.close();
