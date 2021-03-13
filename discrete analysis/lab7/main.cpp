@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <vector>
 
-// ошибки на чекере из-за перевыполнения
 long long Minimum(long long first, long long second, long long third) {
     if(first <= second && first <= third) {
         return first;
@@ -19,7 +18,6 @@ long long Minimum(long long first, long long second, long long third) {
 
 
 int main() {
-    // initialization
     long long **A;
     long long **B;
     int n,m;
@@ -44,8 +42,6 @@ int main() {
             B[i][j] = 0; 
         }
     }
-    // initialization
-    // algorithm
     for(j = 0; j < m; j++) {
         B[n - 1][j] = A[n - 1][j];
     }
@@ -56,8 +52,6 @@ int main() {
         }
         B[i][m - 1] = (Minimum(B[i + 1][m - 2], B[i + 1][m - 1], B[i + 1][m - 1]) + A[i][m - 1]);
     }
-    // algorithm
-    // output
     for(j = 1; j < m; j++) {
         if(B[0][k] > B[0][j]) {
             k = j;
@@ -79,14 +73,11 @@ int main() {
         std::cout << "("<< i + 1 << "," <<  k + 1 << ") ";
     }
     std::cout << "\n";
-    // output
-    // clear
     for(int i = 0; i < n; i++) {
         delete [] A[i];
         delete [] B[i];
     }
     delete [] A;
     delete [] B;
-    // clear
     return 0;
 }
