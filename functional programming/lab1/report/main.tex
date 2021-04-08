@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+	breaklines=true,
+	breakatwhitespace=true,
+	keepspaces = true,
+	tabsize=2
+}
+\begin{document}
+
+
+\section*{Отчет по лабораторной работе №\,1 
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+\begin{flushright}
+Студент группы 8О-307Б-18 МАИ \textit{Тояков Артем}, \textnumero 22 по списку \\
+\makebox[7cm]{Контакты: {\tt temathesuper@mail.ru} \hfill} \\
+\makebox[7cm]{Работа выполнена: 08.04.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Примитивные функции и особые операторы в Common Lisp.
+
+\section{Цель работы}
+Изучить примитивные функции и особые операторы в Common Lisp.
+
+\section{Задание (вариант № 1.18 )}
+Запрограммируйте на языке Коммон Лисп функцию-предикат с тремя параметрами - действительными положительными числами a, b, c. Функция должна возвращать T (истину), если существует треугольник с длинами сторон a, b и c.
+
+\section{Оборудование студента}
+Процессор: Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, память: 3,8 Gb, разрядность системы: 64.
+
+\section{Программное обеспечение}
+UBUNTU 18.04.5 LTS, компилятор sbcl
+
+\section{Идея, метод, алгоритм}
+Алгоритм будет применён для всех возможных комбинаций сторон (всего 3, т. е. c > a + b, a > c + b, b > a + c). Идея в том, чтобы сравнить длину стороны с суммой длин двух оставшихся, и если первая величина окажется больше, то треугольник существовать не может, то есть мы будем идти от обратного. В данной программе реализованы одна ключевая функция (triangle-p (a b c)). В ней с помощью предиката cond мы поочереди проверяем 3 наших условия, и как только одно из них окажется true мы вернём Nil. Иначе предикат проверит последнее условие - проверку на атомарность и выведет T.
+
+\section{Сценарий выполнения работы}
+\begin{itemize}
+\setlength{\itemsep}{-1mm}
+\item Анализ возможных реализаций поставленной задачи на common Lisp
+\item Изучение синтаксиса и основных функций common Lisp
+\item Реализация поставленной задачи на common Lisp
+\end{itemize}
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+\begin{verbatim}
+(defun triangle-p (a b c)
+    (cond
+        ((> c (+ a b)) Nil)
+        ((> a (+ b c)) Nil)
+        ((> b (+ a c)) Nil)
+        ((atom 1) T)
+    )
+)
+\end{verbatim}
+%\lstinputlisting{./lab2.lisp}
+
+\subsection{Результаты работы}
+\begin{verbatim}
+* (triangle-p 5.3 3.1 4.0)
+
+T
+* (triangle-p 10.3 3.1 4.0)
+
+NIL
+* (triangle-p 84.4224 96.343434 78.934434)
+
+T
+* (triangle-p 3232.34324 3434.2222 5641.233)
+
+T
+\end{verbatim}
+%\lstinputlisting{./log2.lisp}
+
+\section{Дневник отладки}
+\begin{tabular}{|p{50pt}|p{130pt}|p{130pt}|p{70pt}|}
+\hline
+Дата & Событие & Действие по исправлению & Примечание \\ \hline
+ &  &  &\\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+Программа будет работать некорректно только в одном случае: если на вход подать нулевую сторону.
+
+\section{Выводы}
+Данная работа позволила отойти от стандартного императивного программирования и взглянуть на решение поставленной задачи  в функциональной парадигме. Данный алгоритм тривиален и работает за константное время. Также хотелось бы отметить, что в ходе данной работы познакомился с синтаксисом common Lisp и некоторыми основными функциями common Lisp.
+
+\end{document}
