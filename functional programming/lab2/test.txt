@@ -1,0 +1,11 @@
+(nth-element 3 '(a0 b1 c2 d3 e4)) D3
+(nth-element 5 '(a0 b1 c2 d3 e4)) NIL
+(nth-element 4 '(ubefbew ejfefn fenfie ijijaoo fejfefeihf nennn)) FEJFEFEIHF
+(nth-element 0 '(1 2 3 2343 3242)) 1
+(nth-element 6 '(7df7 s7fy ew8 wbf3 23jb2 uhf9 we2)) WE2
+
+(nth 3 '(a0 b1 c2 d3 e4)) D3
+(nth 5 '(a0 b1 c2 d3 e4)) NIL
+(nth 4 '(ubefbew ejfefn fenfie ijijaoo fejfefeihf nennn)) FEJFEFEIHF
+(nth 0 '(1 2 3 2343 3242)) 1
+(nth 6 '(7df7 s7fy ew8 wbf3 23jb2 uhf9 we2)) WE2

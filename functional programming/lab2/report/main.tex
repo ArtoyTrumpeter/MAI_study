@@ -1,0 +1,148 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+	breaklines=true,
+	breakatwhitespace=true,
+	keepspaces = true,
+	tabsize=2
+}
+\begin{document}
+
+
+\section*{Отчет по лабораторной работе №\,2 
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+\begin{flushright}
+Студент группы 8О-307Б-18 МАИ \textit{Тояков Артем}, \textnumero 22 по списку \\
+\makebox[7cm]{Контакты: {\tt temathesuper@mail.ru} \hfill} \\
+\makebox[7cm]{Работа выполнена: 09.04.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Простейшие функции работы со списками common Lisp.
+
+\section{Цель работы}
+Изучить  простейшие функции работы со списками common Lisp.
+
+\section{Задание (вариант № 2.17)}
+Запрограммируйте на языке Коммон Лисп функцию, которая принимает в качестве аргументов натуральное число i и список lst и выдает элемент списка, имеющий индекс (номер) i, индексация с 0. Если i больше или равно длине lst, то вернуть NIL.
+
+\section{Оборудование студента}
+Процессор: Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, память: 3,8 Gb, разрядность системы: 64.
+
+\section{Программное обеспечение}
+UBUNTU 18.04.5 LTS, компилятор sbcl
+
+\section{Идея, метод, алгоритм}
+Идея в том, чтобы сравнивать индекс с 0 и уменьшать его на 1, пока он не станет 0. Тогда мы выведем требующийся элемент списка.
+\begin{itemize}
+\setlength{\itemsep}{-1mm} % уменьшает расстояние между элементами списка
+\item (nth-element (i list)) - вызов функции find-el, с предварительной проверкой корректности индекса с помощью условного оператора.
+\item (find-el (i list)) - рекурсивная функция: с помощью предиката cond мы проверяем словие с предикатом zerop, который, в свою очередь проверяет является ли нулевым наш индекс и если да, то мы с помощью предиката car выводим нужный элемент. Если же нет функция вызывается рекурсивно от индекса уменьшенного на 1 и списка, у которого удаляется текущий первый элемент с помощью предиката cdr.
+\end{itemize}
+
+\section{Сценарий выполнения работы}
+\begin{itemize}
+\setlength{\itemsep}{-1mm}
+\item Анализ возможных реализаций поставленной задачи на common Lisp
+\item Изучение синтаксиса и основных функций работы со списками common Lisp
+\item Реализация поставленной задачи на common Lisp
+\item Сравнение результатов работы написанной программы и стандартного предиката nth
+\end{itemize}
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+\begin{verbatim}
+(defun nth-element (i list)
+    (if (< i (list-length list))
+        (find-el i list)
+    )
+)
+
+(defun find-el (index list)
+    (cond
+        ((zerop index) (car list))
+        ((atom 1) (find-el (- index 1) (cdr list)))
+    )
+)
+\end{verbatim}
+
+\subsection{Результаты работы}
+\begin{verbatim}
+* (nth-element 3 '(a0 b1 c2 d3 e4))
+
+D3
+* (nth-element 5 '(a0 b1 c2 d3 e4)) 
+
+NIL
+* (nth-element 4 '(ubefbew ejfefn fenfie ijijaoo fejfefeihf nennn))
+
+FEJFEFEIHF
+
+* (nth-element 0 '(1 2 3 2343 3242))
+
+1
+* (nth-element 6 '(7df7 s7fy ew8 wbf3 23jb2 uhf9 we2))
+
+WE2
+
+* (nth 3 '(a0 b1 c2 d3 e4))
+
+D3
+* (nth 5 '(a0 b1 c2 d3 e4))
+
+NIL
+* (nth 4 '(ubefbew ejfefn fenfie ijijaoo fejfefeihf nennn))
+
+FEJFEFEIHF
+
+* (nth 0 '(1 2 3 2343 3242))
+
+1
+* (nth 6 '(7df7 s7fy ew8 wbf3 23jb2 uhf9 we2))
+
+WE2
+\end{verbatim}
+
+\section{Дневник отладки}
+\begin{tabular}{|p{50pt}|p{130pt}|p{130pt}|p{70pt}|}
+\hline
+Дата & Событие & Действие по исправлению & Примечание \\ \hline
+& & &\\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+Замечаний нет.
+
+\section{Выводы}
+В ходе данной работы я познакомился с представлением и основными особенностями списков в common Lisp. Список в common Lisp представляет собой S-выражение вида: атом | список(хвост). В конце работы я сравнил результат работы моей программы и стандартного предиката nth и после того, как они вывели идентичные значения для одинаковых входных данных, я убедился в том, что алгоритм реализован корректно.
+
+\end{document}
