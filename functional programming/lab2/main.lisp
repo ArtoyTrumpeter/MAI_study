@@ -7,6 +7,6 @@
 (defun find-el (index list)
     (cond
         ((zerop index) (car list))
-        ((atom 1) (find-el (- index 1) (cdr list)))
+        (t (find-el (- index 1) (cdr list)))
     )
 )
