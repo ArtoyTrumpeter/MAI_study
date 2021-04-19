@@ -1,0 +1,46 @@
+test_variables
+(defvar m1 (make-array '(3 3) :initial-contents '((0 0 0) (0 0 0) (0 0 0))))
+(defvar u1 #(1 1 1))
+(defvar m2 (make-array '(2 4) :initial-contents '((0 0 0 0) (0 0 0 0))))
+(defvar u2 #(1 1 1 1))
+(defvar m3 (make-array '(3 4) :initial-contents '((0 0 0 0) (0 0 0 0) (0 0 0 0))))
+(defvar u3 #(1 1 1 1))
+(defvar m4 (make-array '(1 1) :initial-contents '((0))))
+(defvar u4 #(1))
+(defvar m5 (make-array '(4 2) :initial-contents '((0 0) (0 0) (0 0) (0 0))))
+(defvar u5 #(1 1))
+
+;(extended-matrix m1 u1 0)
+;(extended-matrix m2 u2 1)
+;(extended-matrix m3 u3 2)
+;(extended-matrix m4 u4 0)
+;(extended-matrix m4 u4 1)
+;(extended-matrix m4 u4 2)
+;(extended-matrix m5 u5 0)
+;(extended-matrix m5 u5 4)
+
+* (extended-matrix m1 u1 0)
+
+#2A((1 1 1) (0 0 0) (0 0 0) (0 0 0))
+* (extended-matrix m2 u2 1)
+
+#2A((0 0 0 0) (1 1 1 1) (0 0 0 0))
+* (extended-matrix m3 u3 2)
+
+#2A((0 0 0 0) (0 0 0 0) (1 1 1 1) (0 0 0 0))
+* (extended-matrix m4 u4 0)
+
+#2A((1) (0))
+* (extended-matrix m4 u4 1)
+
+#2A((0) (1))
+* (extended-matrix m4 u4 2)
+
+NIL
+* (extended-matrix m5 u5 0)
+
+#2A((1 1) (0 0) (0 0) (0 0) (0 0))
+* (extended-matrix m5 u5 4)
+
+#2A((0 0) (0 0) (0 0) (0 0) (1 1))
+* 

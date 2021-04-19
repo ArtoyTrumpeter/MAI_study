@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+	breaklines=true,
+	breakatwhitespace=true,
+	keepspaces = true,
+	tabsize=2
+}
+\begin{document}
+
+
+\section*{Отчет по лабораторной работе №\,3 
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+\begin{flushright}
+Студент группы 8О-307Б-18 МАИ \textit{Тояков Артем}, \textnumero 22 по списку \\
+\makebox[7cm]{Контакты: {\tt temathesuper@mail.ru} \hfill} \\
+\makebox[7cm]{Работа выполнена: 12.04.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Последовательности, массивы и управляющие конструкции Коммон Лисп.
+
+\section{Цель работы}
+Изучить Последовательности, массивы и управляющие конструкции Коммон Лисп.
+
+\section{Задание (вариант № 3.17)}
+Запрограммировать на языке Коммон Лисп функцию, принимающую три аргумента:
+\begin{itemize}
+    \item A - двумерный массив, представляющий действительную матрицу размера m×n,
+    \item u - вектор действительных чисел длины n,
+    \item i - номер строки, 0 $\leqslant$ i $\leqslant$ m.
+\end{itemize}
+    
+Функция должна возвращать новую матрицу размера (m+1)×n, полученную вставкой после строки с номером i новой строки с элементами из u. i=0 означает вставку перед первой строкой.
+
+Исходный массив A должен оставаться неизменным.
+
+\section{Оборудование студента}
+Процессор: Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, память: 3,8 Gb, разрядность системы: 64.
+
+\section{Программное обеспечение}
+UBUNTU 18.04.5 LTS, компилятор sbcl
+
+\section{Идея, метод, алгоритм}
+Метод состоит из двух итераций. Идея в том, чтобы для начала вставить u-вектор на место i+1 строки матрицы b. Затем же в полученную матрицу на место j+1 столбца вставить v-вектор. Мне предстоит разбить матрицу на составные части и по новому собрать ее. В программе две основные функции:
+\begin{itemize}
+\setlength{\itemsep}{-1mm} % уменьшает расстояние между элементами списка
+\item (line-extended-matrix a k v) - В данной функции происходит создание матрицы b и копирование элементов матрицы до элемента a[k][...]. Затем же вставка вектора строки на позицию b[k][...] и копирование остальных элементов, если оно необходимо.
+\item (extended-matrix a u i) - Функция-вызов для функции line-extended-matrix, где учитываются ограничения, наложенные на индекс i.
+\end{itemize}
+
+\section{Сценарий выполнения работы}
+\begin{itemize}
+\setlength{\itemsep}{-1mm}
+\item Анализ возможных реализаций поставленной задачи на common Lisp
+\item Изучение синтаксиса и основных функций работы со списками common Lisp
+\item Реализация поставленной задачи на common Lisp
+\end{itemize}
+
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+\begin{verbatim}
+(defun line-extended-matrix (a k v)
+    (let ((m (array-dimension a 0))
+        (n (array-dimension a 1)))
+        (let ((b (make-array (list (+ 1 m) n)))) ; b = Matrix(* (1 + m) n)
+            (dotimes (i k)
+                (dotimes (j n)
+                    (setf (aref b i j) (aref a i j)))) ; b[i][j] = a[i][j]
+            (loop
+                :for j :below n
+                :do (setf (aref b k j) (aref v j))) ; b[k][j] = v[j], j : 0 to n
+            (dotimes (j n)
+                (loop :for i :from k :to (- m 1) :do
+                    (setf (aref b (+ 1 i) j) (aref a i j)))) ; b[i + 1][j] = a[i][j]
+        b)
+    )
+)
+
+(defun extended-matrix (a u i)
+    (array-dimension a 0)
+    (array-dimension a 1)
+    (if (and (<= i (array-dimension a 0)) (>= i 0)) (line-extended-matrix a i u))
+)
+\end{verbatim}
+
+\subsection{Результаты работы}
+Файл с тестовыми переменными прикреплён к работе.
+\begin{verbatim}
+* (extended-matrix m1 u1 0)
+
+#2A((1 1 1) (0 0 0) (0 0 0) (0 0 0))
+* (extended-matrix m2 u2 1)
+
+#2A((0 0 0 0) (1 1 1 1) (0 0 0 0))
+* (extended-matrix m3 u3 2)
+
+#2A((0 0 0 0) (0 0 0 0) (1 1 1 1) (0 0 0 0))
+* (extended-matrix m4 u4 0)
+
+#2A((1) (0))
+* (extended-matrix m4 u4 1)
+
+#2A((0) (1))
+* (extended-matrix m4 u4 2)
+
+NIL
+* (extended-matrix m5 u5 0)
+
+#2A((1 1) (0 0) (0 0) (0 0) (0 0))
+* (extended-matrix m5 u5 4)
+
+#2A((0 0) (0 0) (0 0) (0 0) (1 1))
+\end{verbatim}
+
+\section{Дневник отладки}
+\begin{tabular}{|p{50pt}|p{130pt}|p{130pt}|p{70pt}|}
+\hline
+Дата & Событие & Действие по исправлению & Примечание \\ \hline
+& & &\\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+Довольно долго пришлось разбираться с управляющими конструкциями в Common Lisp.
+
+\section{Выводы}
+В ходе данной работы мне удалось познакомиться со встроенными функциями/инструментами, а также управляющими конструкциями коммон лисп с помощью которых мне удалось реализовать классический обход по матрице, используя циклы. Это поможет мне легче понимать, как работает язык и облегчит будущую работу с массивами и матрицами.
+
+\end{document}
