@@ -1,0 +1,178 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{multicol,multirow}
+\usepackage{tabularx}
+\usepackage{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{titlesec}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection.}{0.3em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection.}{0.3em}{}
+
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*1}{*1}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\usepackage{listings}
+\lstloadlanguages{Lisp}
+\lstset{extendedchars=false,
+	breaklines=true,
+	breakatwhitespace=true,
+	keepspaces = true,
+	tabsize=2
+}
+\begin{document}
+
+
+\section*{Отчет по лабораторной работе №\,4 
+по курсу \guillemotleft  Функциональное программирование\guillemotright}
+\begin{flushright}
+Студент группы 8О-307Б-18 МАИ \textit{Тояков Артем}, \textnumero 22 по списку \\
+\makebox[7cm]{Контакты: {\tt temathesuper@mail.ru} \hfill} \\
+\makebox[7cm]{Работа выполнена: 23.04.2021 \hfill} \\
+\ \\
+Преподаватель: Иванов Дмитрий Анатольевич, доц. каф. 806 \\
+\makebox[7cm]{Отчет сдан: \hfill} \\
+\makebox[7cm]{Итоговая оценка: \hfill} \\
+\makebox[7cm]{Подпись преподавателя: \hfill} \\
+
+\end{flushright}
+
+\section{Тема работы}
+Знаки и строки.
+
+\section{Цель работы}
+Изучить знаки и строки, а также методы работы с ними в Коммон Лисп.
+
+\section{Задание (вариант № 4.11)}
+Запрограммировать на языке Коммон Лисп функцию, принимающую один аргумент - предложение. Функция должна возвращать число слов в этом предложении, у которых первый и последний знак совпадают. Сравнение как латинских букв, так и русских должно быть регистро-независимым.
+
+\section{Оборудование студента}
+Процессор: Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, память: 3,8 Gb, разрядность системы: 64.
+
+\section{Программное обеспечение}
+UBUNTU 18.04.5 LTS, компилятор sbcl
+
+\section{Идея, метод, алгоритм}
+Идея в том, чтобы пройти по всему предложению, разделяя его по словам, сравнивать первую и последнюю буквы всех слов, и в тех случаях, где они равны, увеличивать счётчик на 1. В конце вывести результат - переменную счётчик.
+\\
+В программе есть одна основная функция (defun count-words-with-start-eq-end(str)), в которой в начале объявляются переменные, а затем с помощью цикла loop и двух итераторов i, j реализовано разбиение на слова и сравнение букв. Один проход по внешнему циклу - проверка одного слова.  
+
+\section{Сценарий выполнения работы}
+\begin{itemize}
+\setlength{\itemsep}{-1mm}
+\item Анализ возможных реализаций поставленной задачи на Коммон Лисп
+\item Изучение синтаксиса и основных функций работы со знаками и строками Коммон Лисп
+\item Реализация поставленной задачи на Коммон Лисп
+\end{itemize}
+\section{Распечатка программы и её результаты}
+
+\subsection{Исходный код}
+\begin{verbatim}
+(defun whitespace-char(ch)
+	(member ch '(#\Space #\Tab #\Newline))
+)
+
+(defun russian-upper-case-p (char)
+    (position char "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ")
+)
+
+(defun russian-char-downcase (char)
+	(let ((i (russian-upper-case-p char)))
+        (if i 
+            (char "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" i)
+            (char-downcase char)
+        )
+    )
+)  
+
+(defun russian-char-equal (char1 char2)
+    (char-equal (russian-char-downcase char1)
+        (russian-char-downcase char2))
+)
+
+(defun endSentence-char(ch)
+	(member ch '(#\! #\? #\. #\"))
+)
+
+(defun count-words-with-start-eq-end(str)
+	(let
+		(
+			(res 0)
+            (i 0)
+            (j 0)
+			(cur-ch-begin nil)
+			(cur-ch-end nil)
+		)
+		
+		(loop while (and (not (endSentence-char (char str i))) (< i (length str))) do
+			(setq cur-ch-begin (char str i))
+			(setq j i)
+            (loop while (and (< j (length str)) (and (not (whitespace-char (char str j))) (not (endSentence-char (char str j))))) do
+                (setq j (+ j 1))
+            )
+            (setq j (- j 1))
+            (setq cur-ch-end (char str j))
+			(if (or (char-equal cur-ch-begin cur-ch-end) (russian-char-equal cur-ch-begin cur-ch-end))
+				(setq res (+ res 1))
+			)
+			(setq i (+ j 1))
+            (loop while (and (< i (length str)) (and (not (endSentence-char (char str i))) (whitespace-char (char str i)))) do
+                (setq i (+ i 1))
+            )
+		)
+		(write res)
+	)
+)
+\end{verbatim}
+
+\subsection{Результаты работы}
+\begin{verbatim}
+* (count-words-with-start-eq-end "а роза упала на лапу Азора")
+2
+2
+* (count-words-with-start-eq-end "hepl fuf me")
+1
+1
+* (count-words-with-start-eq-end "К долинам,    я крутой!") 
+2
+2
+* (count-words-with-start-eq-end "Двойные кавычки активно используются в русском языке в машинном тексте!?")
+3
+3
+* (count-words-with-start-eq-end "Ала ара как лел мор мом троп?")
+5
+5
+* (count-words-with-start-eq-end "Америка.")
+1
+1
+* (count-words-with-start-eq-end "На столе вкусная айва или баба пришла, где арка.")
+3
+3
+* (count-words-with-start-eq-end "Hello, world ahaha.")
+1
+1
+\end{verbatim}
+
+\section{Дневник отладки}
+\begin{tabular}{|p{50pt}|p{130pt}|p{130pt}|p{70pt}|}
+\hline
+Дата & Событие & Действие по исправлению & Примечание \\ \hline
+& & &\\
+\hline
+\end{tabular}
+
+\section{Замечания автора по существу работы}
+Единственный недочёт: результат выводится 2 раза.
+
+\section{Выводы}
+В ходе данной работы мне удалось познакомиться со встроенными функциями/инструментами для работы со знаками и строками. Со строками я был знаком и ранее, однако было довольно интересно увидеть применение такой структуры данных в Коммон Лисп. В моей программе алгоритм работает за линейное время O(n), где n - длина исследуемого предложения.
+
+\end{document}

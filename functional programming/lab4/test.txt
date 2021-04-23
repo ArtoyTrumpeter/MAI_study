@@ -1,0 +1,8 @@
+(load (compile-file "main.lisp"))
+
+(count-words-with-start-eq-end "а роза упала на лапу Азора")
+(count-words-with-start-eq-end "Ала ара как лел мор мом троп?")
+(count-words-with-start-eq-end "Америка.")
+(count-words-with-start-eq-end "На столе вкусная айва или баба пришла, где арка.")
+(count-words-with-start-eq-end "Двойные кавычки активно используются в русском языке в машинном тексте!?")
+(count-words-with-start-eq-end "Hello, world ahaha.")
