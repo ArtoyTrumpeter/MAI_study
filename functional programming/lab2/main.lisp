@@ -1,5 +1,5 @@
 (defun nth-element (i list)
-    (if (< i (list-length list))
+    (if (< i (length list))
         (find-el i list)
     )
 )
