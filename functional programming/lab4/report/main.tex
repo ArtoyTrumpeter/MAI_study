@@ -63,7 +63,7 @@ UBUNTU 18.04.5 LTS, компилятор sbcl
 \section{Идея, метод, алгоритм}
 Идея в том, чтобы пройти по всему предложению, разделяя его по словам, сравнивать первую и последнюю буквы всех слов, и в тех случаях, где они равны, увеличивать счётчик на 1. В конце вывести результат - переменную счётчик.
 \\
-В программе есть одна основная функция (defun count-words-with-start-eq-end(str)), в которой в начале объявляются переменные, а затем с помощью цикла loop и двух итераторов i, j реализовано разбиение на слова и сравнение букв. Один проход по внешнему циклу - проверка одного слова.  
+В программе есть одна основная функция (defun count-words-with-start-eq-end (txt)), в которой в начале объявляются переменные, а затем с помощью дополнительной функции word-list реализовано разбиение на слова.
 
 \section{Сценарий выполнения работы}
 \begin{itemize}
@@ -76,8 +76,18 @@ UBUNTU 18.04.5 LTS, компилятор sbcl
 
 \subsection{Исходный код}
 \begin{verbatim}
-(defun whitespace-char(ch)
-	(member ch '(#\Space #\Tab #\Newline))
+
+(defun whitespace-char-p (char)
+    (member char '(#\Space #\Tab #\Newline)))
+
+(defun word-list (string)
+    (loop with len = (length string)
+        for left = 0 then (1+ right)
+        for right = (or (position-if #'whitespace-char-p string :start left) len)
+        unless (= right left)
+            collect (subseq string left right)
+        while (< right len)
+    )
 )
 
 (defun russian-upper-case-p (char)
@@ -85,92 +95,83 @@ UBUNTU 18.04.5 LTS, компилятор sbcl
 )
 
 (defun russian-char-downcase (char)
-	(let ((i (russian-upper-case-p char)))
+    (let ((i (russian-upper-case-p char)))
         (if i 
             (char "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" i)
             (char-downcase char)
         )
     )
-)  
+)
 
 (defun russian-char-equal (char1 char2)
     (char-equal (russian-char-downcase char1)
-        (russian-char-downcase char2))
+        (russian-char-downcase char2)
+    )
 )
 
-(defun endSentence-char(ch)
-	(member ch '(#\! #\? #\. #\"))
+(defun english-upper-case-p (char)
+    (position char "ABCDEFGHIGKLMNOPQRSTUVWXYZ")
 )
 
-(defun count-words-with-start-eq-end(str)
-	(let
-		(
-			(res 0)
-            (i 0)
-            (j 0)
-			(cur-ch-begin nil)
-			(cur-ch-end nil)
-		)
-		
-		(loop while (and (not (endSentence-char (char str i))) (< i (length str))) do
-			(setq cur-ch-begin (char str i))
-			(setq j i)
-            (loop while (and (< j (length str)) (and (not (whitespace-char (char str j))) (not (endSentence-char (char str j))))) do
-                (setq j (+ j 1))
-            )
-            (setq j (- j 1))
-            (setq cur-ch-end (char str j))
-			(if (or (char-equal cur-ch-begin cur-ch-end) (russian-char-equal cur-ch-begin cur-ch-end))
-				(setq res (+ res 1))
-			)
-			(setq i (+ j 1))
-            (loop while (and (< i (length str)) (and (not (endSentence-char (char str i))) (whitespace-char (char str i)))) do
-                (setq i (+ i 1))
-            )
-		)
-		(write res)
-	)
+(defun english-char-downcase (char)
+    (let ((i (english-upper-case-p char)))
+        (if i 
+            (char "abcdefghigklmnopqrstuvwxyz" i)
+            (char-downcase char)
+        )
+    )
 )
+
+(defun english-char-equal (char1 char2)
+    (char-equal (english-char-downcase char1)
+        (english-char-downcase char2)
+    )
+)
+
+(defun count-words-with-start-eq-end (txt)
+    (let ((found 0))
+    (dolist (sentence txt)
+        (dolist (word (word-list sentence))
+            (let ((first-char NIL) (last-char NIL))
+            (setf first-char (char word 0))
+            (setf last-char (char word (- (length word) 1)))
+                
+            (let ((rus-res(russian-char-equal first-char last-char)) (eng-res(english-char-equal first-char last-char)))
+                (if (or rus-res eng-res) (setf found (+ found 1)))
+            )
+            )
+        )
+    )
+    found)
+)
+
 \end{verbatim}
 
 \subsection{Результаты работы}
 \begin{verbatim}
-* (count-words-with-start-eq-end "а роза упала на лапу Азора")
+* (count-words-with-start-eq-end '("а роза упала на лапу Азора"))
+
 2
-2
-* (count-words-with-start-eq-end "hepl fuf me")
-1
-1
-* (count-words-with-start-eq-end "К долинам,    я крутой!") 
-2
-2
-* (count-words-with-start-eq-end "Двойные кавычки активно используются в русском языке в машинном тексте!?")
-3
-3
-* (count-words-with-start-eq-end "Ала ара как лел мор мом троп?")
+* (count-words-with-start-eq-end '("Ала ара как лел мор мом троп?"))
+
 5
-5
-* (count-words-with-start-eq-end "Америка.")
-1
-1
-* (count-words-with-start-eq-end "На столе вкусная айва или баба пришла, где арка.")
+* (count-words-with-start-eq-end '("Двойные кавычки активно используются в русском языке в машинном тексте!?"))
+
 3
-3
-* (count-words-with-start-eq-end "Hello, world ahaha.")
-1
-1
+* (count-words-with-start-eq-end '("Hello, world ahah."))
+
+0
 \end{verbatim}
 
 \section{Дневник отладки}
 \begin{tabular}{|p{50pt}|p{130pt}|p{130pt}|p{70pt}|}
 \hline
 Дата & Событие & Действие по исправлению & Примечание \\ \hline
-& & &\\
+06.05.2021 & Ошибка: выход за границу памяти массива & Довольно сильное изменение программы, ввод структуры данных: list &\\
 \hline
 \end{tabular}
 
 \section{Замечания автора по существу работы}
-Единственный недочёт: результат выводится 2 раза.
 
 \section{Выводы}
 В ходе данной работы мне удалось познакомиться со встроенными функциями/инструментами для работы со знаками и строками. Со строками я был знаком и ранее, однако было довольно интересно увидеть применение такой структуры данных в Коммон Лисп. В моей программе алгоритм работает за линейное время O(n), где n - длина исследуемого предложения.
