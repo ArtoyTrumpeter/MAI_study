@@ -1,0 +1,10 @@
+(load (compile-file "main.lisp"))
+
+(setq v1 (make-instance 'cart :x 0 :y 0))
+(setq v2 (make-instance 'cart :x 1 :y 1))
+(setq v3 (make-instance 'cart :x 2 :y 2))
+(setq v4 (make-instance 'polar :radius 1 :angle (/ pi 4)))
+(setq v5 (make-instance 'polar :radius 0 :angle 0))
+(setq v6 (make-instance 'polar :radius 0 :angle 2))
+
+(on-single-line3-p (('cart :x 0 :y 0) ('cart :x 1 :y 1) ('cart :x 2 :y 2)))   
